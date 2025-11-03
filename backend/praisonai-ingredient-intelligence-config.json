@@ -1,0 +1,157 @@
+{
+  "name": "Praison.ai Ingredient Intelligence System",
+  "version": "2.0.0",
+  "description": "Production-ready ingredient intelligence system using Praison.ai multi-agent framework",
+  "agents": {
+    "IngredientOrchestrator": {
+      "role": "Ingredient Intelligence Coordinator",
+      "goal": "Coordinate multi-agent ingredient extraction and analysis workflows",
+      "backstory": "Expert coordinator managing intelligent ingredient processing pipelines with quality assurance",
+      "tools": ["IngredientNERAgent", "IngredientParserAgent", "IngredientCanonicalizerAgent", "IngredientValidatorAgent", "IngredientInferenceAgent"],
+      "memory": true,
+      "knowledge_base": true,
+      "async": true
+    },
+    "IngredientNERAgent": {
+      "role": "Named Entity Recognition Specialist",
+      "goal": "Extract ingredient entities from text with high accuracy using NLP models",
+      "backstory": "Advanced NLP specialist with expertise in food ingredient extraction using spaCy and Flair",
+      "tools": ["SpacyIngredientNER", "UnitNormalizer"],
+      "memory": true,
+      "knowledge_base": true,
+      "async": true
+    },
+    "IngredientParserAgent": {
+      "role": "Quantification and Unit Parser",
+      "goal": "Parse quantities, units, and preparation methods from ingredient text",
+      "backstory": "Specialist in parsing measurement data and cooking terminology",
+      "tools": ["UnitNormalizer", "IngredientTaxonomyLookup"],
+      "memory": true,
+      "knowledge_base": true,
+      "async": true
+    },
+    "IngredientCanonicalizerAgent": {
+      "role": "Ingredient Canonicalization Expert",
+      "goal": "Standardize and map ingredients to canonical forms and taxonomy",
+      "backstory": "Expert in ingredient standardization and taxonomy management",
+      "tools": ["IngredientTaxonomyLookup", "IngredientKnowledgeBase"],
+      "memory": true,
+      "knowledge_base": true,
+      "async": true
+    },
+    "IngredientValidatorAgent": {
+      "role": "Quality Assurance and Validation Agent",
+      "goal": "Validate extracted ingredients with LLM-powered quality assurance",
+      "backstory": "Quality control specialist ensuring accurate and reliable ingredient extraction",
+      "tools": ["LLMIngredientValidator", "IngredientKnowledgeBase"],
+      "memory": true,
+      "knowledge_base": true,
+      "async": true
+    },
+    "IngredientInferenceAgent": {
+      "role": "Dish Name Ingredient Inference Specialist",
+      "goal": "Infer ingredients from dish names and descriptions using AI",
+      "backstory": "Expert in culinary knowledge and ingredient inference from dish descriptions",
+      "tools": ["DishNameInference", "LLMIngredientValidator"],
+      "memory": true,
+      "knowledge_base": true,
+      "async": true
+    }
+  },
+  "tools": {
+    "SpacyIngredientNER": {
+      "type": "nlp_processor",
+      "models": ["spacy_food_ner", "flair_ingredients"],
+      "accuracy": "92-96%",
+      "async": true
+    },
+    "UnitNormalizer": {
+      "type": "quantity_parser",
+      "conversions": true,
+      "locale_support": true,
+      "async": true
+    },
+    "IngredientTaxonomyLookup": {
+      "type": "canonicalizer",
+      "database": "ingredient_taxonomy",
+      "synonym_matching": true,
+      "async": true
+    },
+    "LLMIngredientValidator": {
+      "type": "validator",
+      "confidence_scoring": true,
+      "quality_gates": true,
+      "async": true
+    },
+    "DishNameInference": {
+      "type": "inference_engine",
+      "dish_patterns": true,
+      "culinary_intelligence": true,
+      "async": true
+    },
+    "IngredientKnowledgeBase": {
+      "type": "knowledge_graph",
+      "relationships": true,
+      "semantic_search": true,
+      "async": true
+    }
+  },
+  "workflow": {
+    "name": "Ingredient Intelligence Pipeline",
+    "stages": [
+      {
+        "name": "Entity Extraction",
+        "agent": "IngredientNERAgent",
+        "parallel": false,
+        "timeout": 5000
+      },
+      {
+        "name": "Quantity Parsing",
+        "agent": "IngredientParserAgent", 
+        "parallel": true,
+        "timeout": 3000
+      },
+      {
+        "name": "Canonicalization",
+        "agent": "IngredientCanonicalizerAgent",
+        "parallel": true,
+        "timeout": 4000
+      },
+      {
+        "name": "Quality Validation",
+        "agent": "IngredientValidatorAgent",
+        "parallel": false,
+        "timeout": 6000
+      },
+      {
+        "name": "Inference (Optional)",
+        "agent": "IngredientInferenceAgent",
+        "parallel": false,
+        "condition": "dish_name_provided",
+        "timeout": 8000
+      }
+    ],
+    "orchestration": {
+      "mode": "coordinated",
+      "parallel_processing": true,
+      "agent_handoffs": true,
+      "memory_sharing": true
+    }
+  },
+  "performance": {
+    "target_accuracy": "92-96%",
+    "max_processing_time": "10000ms",
+    "batch_capacity": 100,
+    "concurrent_agents": 5,
+    "memory_limit": "512MB"
+  },
+  "quality_assurance": {
+    "confidence_threshold": 0.8,
+    "validation_gates": true,
+    "human_approval": {
+      "low_confidence": true,
+      "complex_dishes": true
+    },
+    "continuous_learning": true
+  }
+}
